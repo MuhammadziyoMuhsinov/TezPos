@@ -2,6 +2,7 @@ package uz.tezpos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.findNavController
 import uz.tezpos.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -13,18 +14,31 @@ class MainActivity : AppCompatActivity() {
 
         binding.linearAsosiy.setOnClickListener {
             updateDesign(1)
+            navigate(1)
         }
         binding.linearPos.setOnClickListener {
             updateDesign(2)
+            navigate(2)
         }
         binding.linearMaxsulot.setOnClickListener {
             updateDesign(3)
+            navigate(3)
         }
         binding.linearOmbor.setOnClickListener {
             updateDesign(4)
+            navigate(4)
         }
     }
 
+    private fun navigate(choose:Int){
+        when (choose){
+            1->{binding.container.findNavController().navigate(R.id.fragmentMain)}
+            2->{binding.container.findNavController().navigate(R.id.fragmentPos)}
+            3->{binding.container.findNavController().navigate(R.id.fragmentMahsulotlar)}
+            4->{binding.container.findNavController().navigate(R.id.fragmentSklad)}
+
+        }
+    }
     private fun updateDesign(choose: Int) {
         when (choose) {
             1 -> {
