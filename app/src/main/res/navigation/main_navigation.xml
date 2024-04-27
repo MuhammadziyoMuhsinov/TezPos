@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/fragmentMain">
+
+    <fragment
+        android:id="@+id/fragmentMain"
+        android:name="uz.tezpos.FragmentMain"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/fragmentPos"
+        android:name="uz.tezpos.FragmentPos"
+        android:label="fragment_pos"
+        tools:layout="@layout/fragment_pos" />
+    <fragment
+        android:id="@+id/fragmentMahsulotlar"
+        android:name="uz.tezpos.FragmentMahsulotlar"
+        android:label="fragment_mahsulotlar"
+        tools:layout="@layout/fragment_mahsulotlar" />
+    <fragment
+        android:id="@+id/fragmentSklad"
+        android:name="uz.tezpos.FragmentSklad"
+        android:label="fragment_sklad"
+        tools:layout="@layout/fragment_sklad" />
+</navigation>

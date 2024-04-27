@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TezPos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="spinner_entry">
+        <item>Bugungi</item>
+        <item>Haftalik</item>
+        <item>Oylik</item>
+    </string-array>
+</resources>

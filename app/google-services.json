@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "662356769886",
+    "firebase_url": "https://tezpos-85d36-default-rtdb.firebaseio.com",
+    "project_id": "tezpos-85d36",
+    "storage_bucket": "tezpos-85d36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662356769886:android:443de88aa446065fe108cf",
+        "android_client_info": {
+          "package_name": "uz.tezpos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7GrDGMvh1uOcsgFjE9hyA_5L_j9l_RZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
