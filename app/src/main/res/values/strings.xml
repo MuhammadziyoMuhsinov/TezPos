@@ -7,4 +7,10 @@
         <item>Haftalik</item>
         <item>Oylik</item>
     </string-array>
+
+    <string-array name="spinner_entry2">
+        <item>Naxt pul</item>
+        <item>Uzcard</item>
+        <item>Visa karta</item>
+    </string-array>
 </resources>
