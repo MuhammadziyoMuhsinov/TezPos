@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import uz.tezpos.adapter.OnItemClick
+import uz.tezpos.adapter.RvChek
 import uz.tezpos.adapter.RvPos
 import uz.tezpos.databinding.FragmentPosBinding
 import uz.tezpos.livedata.LiveDataOrder
@@ -26,6 +27,7 @@ class FragmentPos : Fragment(), OnItemClick {
     private lateinit var binding: FragmentPosBinding
     private lateinit var rvPos: RvPos
     private lateinit var list: ArrayList<Order>
+    private lateinit var rvChek: RvChek
 
 
     private lateinit var firebaseDatabase: FirebaseDatabase
@@ -40,6 +42,8 @@ class FragmentPos : Fragment(), OnItemClick {
 
         list = ArrayList()
         rvPos = RvPos(list, this)
+        rvChek = RvChek(list)
+        binding.rvChek.adapter = rvChek
         binding.rv.adapter = rvPos
 
         LiveDataOrder.get().observe(requireActivity()) {
@@ -52,37 +56,12 @@ class FragmentPos : Fragment(), OnItemClick {
         }
 
         binding.tasdiqlash.setOnClickListener {
-//            val builder = AlertDialog.Builder(binding.root.context)
-//            builder.setTitle("Maxsulotni sotish?")
-//                .setMessage("Rostdan ham ushbu maxsulotni sotmoqchimisiz yubormoqchimisiz?")
-//                .setPositiveButton("Ha") { dialog: DialogInterface, which: Int ->
-//                    // User clicked Delete
-//                reference.removeValue()
-//                    .addOnSuccessListener {
-//                        val snackbar = Snackbar.make(binding.root,"Muvaffaqiyatli yakunlandi!",1000)
-//                        snackbar.setBackgroundTint(Color.GREEN)
-//                        snackbar.setTextColor(Color.WHITE)
-//                        snackbar.show()
-//                    }
-//
-//                }
-//                .setNegativeButton("Yoq") { dialog: DialogInterface, which: Int ->
-//                    // User clicked Cancel
-//                    dialog.dismiss()
-//                }
-//
-//
-//            val dialog: AlertDialog = builder.create()
-//            dialog.show()
-            reference.removeValue()
-                .addOnSuccessListener {
-                    val snackbar = Snackbar.make(binding.root, "Muvaffaqiyatli yakunlandi!", 1000)
-                    snackbar.setBackgroundTint(Color.GREEN)
-                    snackbar.setTextColor(Color.WHITE)
-                    snackbar.show()
-                }
+            chek()
         }
-
+        binding.pring.setOnClickListener {
+            binding.linearCheck.visibility = View.GONE
+            reference.removeValue()
+        }
 
 
         return binding.root
@@ -128,5 +107,22 @@ class FragmentPos : Fragment(), OnItemClick {
     fun formatNumberWithDots(number: Int): String {
         val formatter = NumberFormat.getInstance(Locale.getDefault())
         return formatter.format(number.toLong())
+    }
+
+    fun chek() {
+        binding.linearCheck.visibility = View.VISIBLE
+        var jami = 0
+        for (order in list) {
+            if (order.count!!>1){
+
+                jami+=(order.price!!*order.count!!)
+            }else{
+                order.price!!.toString()
+                jami+=order.price!!
+            }
+
+        }
+        binding.txtJami.text = formatNumberWithDots(jami)
+
     }
 }
