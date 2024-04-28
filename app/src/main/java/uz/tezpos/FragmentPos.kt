@@ -40,10 +40,10 @@ class FragmentPos : Fragment(), OnItemClick {
 
         list = ArrayList()
         rvPos = RvPos(list, this)
-        binding.rv.adapter= rvPos
+        binding.rv.adapter = rvPos
 
-        LiveDataOrder.get().observe(requireActivity()){
-            if (it!=null){
+        LiveDataOrder.get().observe(requireActivity()) {
+            if (it != null) {
                 list.clear()
                 list.addAll(it)
                 rvPos.notifyDataSetChanged()
@@ -89,40 +89,42 @@ class FragmentPos : Fragment(), OnItemClick {
     }
 
     override fun onClick(newsResponse: Order, isPlus: Boolean) {
-        if (isPlus){
+        if (isPlus) {
             val newCount = newsResponse.count!! + 1
             newsResponse.count = newCount
             reference.child(newsResponse.id!!).setValue(newsResponse)
-        }else{
-            if (newsResponse.count!!!=1){
+        } else {
+            if (newsResponse.count!! != 1) {
                 val newCount = newsResponse.count!! - 1
                 newsResponse.count = newCount
                 reference.child(newsResponse.id!!).setValue(newsResponse)
-            }else{
-              reference.child(newsResponse.id!!).removeValue()
+            } else {
+                reference.child(newsResponse.id!!).removeValue()
             }
         }
         setColculation(list)
     }
 
-    fun setColculation(list:ArrayList<Order>){
-        if (list.isNullOrEmpty()){
-            binding.txtUmumiyQiymat.text ="0" + " so'm"
+    fun setColculation(list: ArrayList<Order>): String {
+        var jami = 0
+        if (list.isNullOrEmpty()) {
+            binding.txtUmumiyQiymat.text = "0" + " so'm"
             binding.txtUmumiy.text = "0" + " so'm"
-        }else{
-            var jami = 0
+        } else {
+
             list.forEach {
-                jami+=if (it.count!=1){
-                    it.count!!*it.price!!
-                }else{
+                jami += if (it.count != 1) {
+                    it.count!! * it.price!!
+                } else {
                     it.price!!
                 }
             }
-            binding.txtUmumiyQiymat.text =formatNumberWithDots(jami) + " so'm"
-            binding.txtUmumiy.text =formatNumberWithDots(jami) + " so'm"
+            binding.txtUmumiyQiymat.text = formatNumberWithDots(jami) + " so'm"
+            binding.txtUmumiy.text = formatNumberWithDots(jami) + " so'm"
         }
-
+        return formatNumberWithDots(jami) + " so'm"
     }
+
     fun formatNumberWithDots(number: Int): String {
         val formatter = NumberFormat.getInstance(Locale.getDefault())
         return formatter.format(number.toLong())

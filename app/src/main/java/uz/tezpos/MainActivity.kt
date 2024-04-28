@@ -129,6 +129,7 @@ class MainActivity : AppCompatActivity() {
                         listMahsulot.add(value)
                     }
                 }
+                binding.splash.visibility = View.INVISIBLE
                 LiveDataMahsulotlar.set(listMahsulot)
             }
 
@@ -140,6 +141,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        binding.savat.setOnClickListener {
+            binding.container.findNavController().navigate(R.id.fragmentPos)
+        }
 
         binding.linearAsosiy.setOnClickListener {
             updateDesign(1)

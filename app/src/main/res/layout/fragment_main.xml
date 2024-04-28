@@ -97,7 +97,7 @@
                                 android:id="@+id/umumiy_daromad"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="657 000 so'm"
+                                android:text="0 so'm"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
@@ -106,7 +106,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-                                android:text="Umumiy daromad"
+                                android:text="Bugunbi savdo"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_8ssp" />
 
@@ -314,6 +314,7 @@
                             android:layout_weight="1" />
 
                         <LinearLayout
+                            android:id="@+id/show_more"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
@@ -396,6 +397,7 @@
                             android:textStyle="italic" />
 
                         <TextView
+                            android:id="@+id/txt_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_5sdp"
@@ -421,6 +423,7 @@
                             android:textStyle="italic" />
 
                         <TextView
+                            android:id="@+id/txt_name2"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
@@ -431,6 +434,7 @@
                             android:textStyle="italic" />
 
                         <TextView
+                            android:id="@+id/txt_count2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_5sdp"
@@ -458,6 +462,7 @@
                             android:textStyle="italic" />
 
                         <TextView
+                            android:id="@+id/txt_name3"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
@@ -468,6 +473,7 @@
                             android:textStyle="italic" />
 
                         <TextView
+                            android:id="@+id/txt_count3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_5sdp"

@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import uz.tezpos.databinding.FragmentMainBinding
+import uz.tezpos.livedata.LiveDataMahsulotlar
 
 
 class FragmentMain : Fragment() {
@@ -43,6 +46,21 @@ class FragmentMain : Fragment() {
         binding.linechart.data = lineData
 
         binding.linechart.invalidate()
+
+        LiveDataMahsulotlar.get().observe(requireActivity()){
+            if (it!=null){
+                binding.txtName.text = it[0].nomi
+                binding.txtName2.text = it[1].nomi
+                binding.txtName3.text = it[2].nomi
+
+                binding.txtCount.text = it[0].soni.toString()
+                binding.txtCount2.text = it[1].soni.toString()
+                binding.txtCount3.text = it[2].soni.toString()
+            }
+        }
+        binding.showMore.setOnClickListener {
+            findNavController().navigate(R.id.fragmentSklad)
+        }
 
         return binding.root
     }

@@ -41,6 +41,7 @@
                     android:layout_weight="1" />
 
                 <ImageView
+                    android:id="@+id/savat"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
@@ -226,7 +227,13 @@
         android:layout_marginBottom="@dimen/_20sdp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <ImageView
+        android:id="@+id/splash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:src="@drawable/main_logo"
+        />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -260,8 +267,8 @@
                 android:paddingVertical="@dimen/_30sdp"
                 >
                 <ImageView
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_100sdp"
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_150sdp"
                     android:src="@drawable/img_drawer"
                     />
                 <TextView
