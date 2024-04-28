@@ -25,6 +25,7 @@ import uz.tezpos.livedata.LiveDataMahsulotlar
 import uz.tezpos.livedata.LiveDataOrder
 import uz.tezpos.models.Order
 import uz.tezpos.models.Product
+import uz.tezpos.models.User
 
 
 class MainActivity : AppCompatActivity() {
@@ -90,6 +91,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var reference: DatabaseReference
     private lateinit var referenceMahsulot: DatabaseReference
+
     private lateinit var list: ArrayList<Order>
     private lateinit var listMahsulot: ArrayList<Product>
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -13,6 +13,9 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import uz.tezpos.databinding.FragmentMainBinding
 import uz.tezpos.livedata.LiveDataMahsulotlar
+import uz.tezpos.mydata.MyData
+import java.text.NumberFormat
+import java.util.Locale
 
 
 class FragmentMain : Fragment() {
@@ -25,7 +28,7 @@ class FragmentMain : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMainBinding.inflate(layoutInflater)
-
+        binding.umumiyDaromad.text = formatNumberWithDots(MyData.price)  + " so'm"
         // Create sample data entries
         binding.linechart.description.isEnabled = false
         binding.linechart.animateY(1000)
@@ -64,6 +67,9 @@ class FragmentMain : Fragment() {
 
         return binding.root
     }
-
+    fun formatNumberWithDots(number: Int): String {
+        val formatter = NumberFormat.getInstance(Locale.getDefault())
+        return formatter.format(number.toLong())
+    }
 
 }

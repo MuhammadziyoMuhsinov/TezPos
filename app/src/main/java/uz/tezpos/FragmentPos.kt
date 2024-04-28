@@ -17,6 +17,8 @@ import uz.tezpos.adapter.RvPos
 import uz.tezpos.databinding.FragmentPosBinding
 import uz.tezpos.livedata.LiveDataOrder
 import uz.tezpos.models.Order
+import uz.tezpos.models.User
+import uz.tezpos.mydata.MyData
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -32,12 +34,14 @@ class FragmentPos : Fragment(), OnItemClick {
 
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var reference: DatabaseReference
+    private lateinit var referenceUser: DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPosBinding.inflate(layoutInflater)
         firebaseDatabase = FirebaseDatabase.getInstance()
+        referenceUser = firebaseDatabase.getReference("user")
         reference = firebaseDatabase.getReference("order")
 
         list = ArrayList()
@@ -60,7 +64,7 @@ class FragmentPos : Fragment(), OnItemClick {
         }
         binding.pring.setOnClickListener {
             binding.linearCheck.visibility = View.GONE
-            reference.removeValue()
+
         }
 
 
@@ -110,18 +114,20 @@ class FragmentPos : Fragment(), OnItemClick {
     }
 
     fun chek() {
+        reference.removeValue()
         binding.linearCheck.visibility = View.VISIBLE
         var jami = 0
         for (order in list) {
-            if (order.count!!>1){
+            if (order.count!! > 1) {
+                jami += (order.price!! * order.count!!)
 
-                jami+=(order.price!!*order.count!!)
-            }else{
+            } else {
+                jami +=order.price!!
                 order.price!!.toString()
-                jami+=order.price!!
             }
 
         }
+        MyData.price+=jami
         binding.txtJami.text = formatNumberWithDots(jami)
 
     }
