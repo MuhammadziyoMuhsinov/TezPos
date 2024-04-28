@@ -16,7 +16,7 @@
             android:id="@+id/img_product"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/img"
+            android:src="@drawable/loading"
             android:layout_margin="@dimen/_2sdp"
             />
         <TextView

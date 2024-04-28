@@ -1,59 +1,130 @@
 package uz.tezpos
 
+import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import uz.tezpos.adapter.OnItemClick
+import uz.tezpos.adapter.RvPos
+import uz.tezpos.databinding.FragmentPosBinding
+import uz.tezpos.livedata.LiveDataOrder
+import uz.tezpos.models.Order
+import java.text.NumberFormat
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentPos.newInstance] factory method to
- * create an instance of this fragment.
- */
-class FragmentPos : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class FragmentPos : Fragment(), OnItemClick {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
+    private lateinit var binding: FragmentPosBinding
+    private lateinit var rvPos: RvPos
+    private lateinit var list: ArrayList<Order>
+
+
+    private lateinit var firebaseDatabase: FirebaseDatabase
+    private lateinit var reference: DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pos, container, false)
+        binding = FragmentPosBinding.inflate(layoutInflater)
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        reference = firebaseDatabase.getReference("order")
+
+        list = ArrayList()
+        rvPos = RvPos(list, this)
+        binding.rv.adapter= rvPos
+
+        LiveDataOrder.get().observe(requireActivity()){
+            if (it!=null){
+                list.clear()
+                list.addAll(it)
+                rvPos.notifyDataSetChanged()
+                setColculation(list)
+            }
+        }
+
+        binding.tasdiqlash.setOnClickListener {
+//            val builder = AlertDialog.Builder(binding.root.context)
+//            builder.setTitle("Maxsulotni sotish?")
+//                .setMessage("Rostdan ham ushbu maxsulotni sotmoqchimisiz yubormoqchimisiz?")
+//                .setPositiveButton("Ha") { dialog: DialogInterface, which: Int ->
+//                    // User clicked Delete
+//                reference.removeValue()
+//                    .addOnSuccessListener {
+//                        val snackbar = Snackbar.make(binding.root,"Muvaffaqiyatli yakunlandi!",1000)
+//                        snackbar.setBackgroundTint(Color.GREEN)
+//                        snackbar.setTextColor(Color.WHITE)
+//                        snackbar.show()
+//                    }
+//
+//                }
+//                .setNegativeButton("Yoq") { dialog: DialogInterface, which: Int ->
+//                    // User clicked Cancel
+//                    dialog.dismiss()
+//                }
+//
+//
+//            val dialog: AlertDialog = builder.create()
+//            dialog.show()
+            reference.removeValue()
+                .addOnSuccessListener {
+                    val snackbar = Snackbar.make(binding.root, "Muvaffaqiyatli yakunlandi!", 1000)
+                    snackbar.setBackgroundTint(Color.GREEN)
+                    snackbar.setTextColor(Color.WHITE)
+                    snackbar.show()
+                }
+        }
+
+
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentPos.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentPos().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onClick(newsResponse: Order, isPlus: Boolean) {
+        if (isPlus){
+            val newCount = newsResponse.count!! + 1
+            newsResponse.count = newCount
+            reference.child(newsResponse.id!!).setValue(newsResponse)
+        }else{
+            if (newsResponse.count!!!=1){
+                val newCount = newsResponse.count!! - 1
+                newsResponse.count = newCount
+                reference.child(newsResponse.id!!).setValue(newsResponse)
+            }else{
+              reference.child(newsResponse.id!!).removeValue()
+            }
+        }
+        setColculation(list)
+    }
+
+    fun setColculation(list:ArrayList<Order>){
+        if (list.isNullOrEmpty()){
+            binding.txtUmumiyQiymat.text ="0" + " so'm"
+            binding.txtUmumiy.text = "0" + " so'm"
+        }else{
+            var jami = 0
+            list.forEach {
+                jami+=if (it.count!=1){
+                    it.count!!*it.price!!
+                }else{
+                    it.price!!
                 }
             }
+            binding.txtUmumiyQiymat.text =formatNumberWithDots(jami) + " so'm"
+            binding.txtUmumiy.text =formatNumberWithDots(jami) + " so'm"
+        }
+
+    }
+    fun formatNumberWithDots(number: Int): String {
+        val formatter = NumberFormat.getInstance(Locale.getDefault())
+        return formatter.format(number.toLong())
     }
 }

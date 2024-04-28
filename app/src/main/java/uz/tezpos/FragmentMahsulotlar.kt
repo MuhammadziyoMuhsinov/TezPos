@@ -5,55 +5,82 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import uz.tezpos.adapter.OnItemClickMahsulot
+import uz.tezpos.adapter.RvAdapterMahsulot
+import uz.tezpos.databinding.FragmentMahsulotlarBinding
+import uz.tezpos.livedata.LiveDataMahsulotlar
+import uz.tezpos.livedata.LiveDataOrder
+import uz.tezpos.models.Order
+import uz.tezpos.models.Product
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentMahsulotlar.newInstance] factory method to
- * create an instance of this fragment.
- */
-class FragmentMahsulotlar : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class FragmentMahsulotlar : Fragment(),OnItemClickMahsulot {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var firebaseDatabase: FirebaseDatabase
+    private lateinit var reference: DatabaseReference
 
+    private lateinit var binding: FragmentMahsulotlarBinding
+    private lateinit var rvAdapterMahsulot: RvAdapterMahsulot
+    private lateinit var list:ArrayList<Product>
+
+    private lateinit var listOrder:ArrayList<Order>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mahsulotlar, container, false)
+        binding = FragmentMahsulotlarBinding.inflate(layoutInflater)
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        reference = firebaseDatabase.getReference("order")
+
+        list = ArrayList()
+        listOrder = ArrayList()
+        rvAdapterMahsulot = RvAdapterMahsulot(list,this)
+        binding.rvProduct.adapter = rvAdapterMahsulot
+        LiveDataMahsulotlar.get().observe(requireActivity()){
+            if (it!=null){
+                list.clear()
+                list.addAll(it)
+                rvAdapterMahsulot.notifyDataSetChanged()
+            }
+        }
+        LiveDataOrder.get().observe(requireActivity()){
+            if (it!=null){
+                listOrder.clear()
+                listOrder.addAll(it)
+            }
+        }
+
+
+
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentMahsulotlar.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentMahsulotlar().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun newsClick(newsResponse: Product) {
+        var check = true
+        for (order in listOrder) {
+            if (order.productId==newsResponse.id){
+                val newcount = order.count!!+1
+                order.count = newcount
+                reference.child(order.id!!).setValue(order).addOnSuccessListener {
+                    findNavController().navigate(R.id.fragmentPos)
                 }
+               check = false
+                break
             }
+        }
+        if (check){
+            val id= reference.push().key.toString()
+            val order = Order(id,newsResponse.id,1,newsResponse.narxi,newsResponse.img,newsResponse.nomi)
+            reference.child(id).setValue(order).addOnSuccessListener {
+                findNavController().navigate(R.id.fragmentPos)
+            }
+        }
+
     }
+
+
 }

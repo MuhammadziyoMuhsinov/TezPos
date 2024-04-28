@@ -44,8 +44,12 @@ dependencies {
 
     //sdp = dp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation 'androidx.core:core-ktx:1.13.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'

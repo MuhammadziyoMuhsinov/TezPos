@@ -202,8 +202,9 @@
                     </LinearLayout>
                 </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_100sdp"
+                    android:layout_height="wrap_content"
                     tools:listitem="@layout/item_rv"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     />
@@ -260,7 +261,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_12ssp"
-                        android:text="560 000 so'm"
+                        android:text="0 so'm"
                         android:textStyle="italic"/>
 
 
@@ -292,7 +293,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_12ssp"
-                        android:text="5 000 so'm"
+                        android:text="0 so'm"
                         android:textStyle="italic"/>
 
 
@@ -363,7 +364,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_12ssp"
-                        android:text="565 000 so'm"
+                        android:text="0 so'm"
                         android:textColor="@color/black"
                         android:textStyle="bold"/>
 
@@ -417,6 +418,7 @@
 
                 >
                 <ImageView
+                    android:id="@+id/bekor_qilish"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/bekor_qilish"
@@ -427,6 +429,7 @@
                     />
 
                 <ImageView
+                    android:id="@+id/tasdiqlash"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/tasdiqlash"
