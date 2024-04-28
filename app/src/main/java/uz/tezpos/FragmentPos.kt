@@ -64,7 +64,7 @@ class FragmentPos : Fragment(), OnItemClick {
         }
         binding.pring.setOnClickListener {
             binding.linearCheck.visibility = View.GONE
-
+reference.removeValue()
         }
 
 
@@ -96,7 +96,7 @@ class FragmentPos : Fragment(), OnItemClick {
         } else {
 
             list.forEach {
-                jami += if (it.count != 1) {
+                jami += if (it.count!! >= 1) {
                     it.count!! * it.price!!
                 } else {
                     it.price!!
@@ -114,7 +114,6 @@ class FragmentPos : Fragment(), OnItemClick {
     }
 
     fun chek() {
-        reference.removeValue()
         binding.linearCheck.visibility = View.VISIBLE
         var jami = 0
         for (order in list) {

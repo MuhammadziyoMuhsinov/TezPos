@@ -33,7 +33,9 @@ class FragmentSklad : Fragment() {
             override fun newsClick(newsResponse: Product) {
                 val newCount = newsResponse.soni!! + 1
                 newsResponse.soni = newCount
-                reference.child(newsResponse.id!!).setValue(newsResponse)
+                reference.child(newsResponse.id!!).setValue(newsResponse).addOnSuccessListener {
+                    rvAdapterSklad.notifyDataSetChanged()
+                }
             }
         })
         binding.rvOmbor.adapter = rvAdapterSklad
